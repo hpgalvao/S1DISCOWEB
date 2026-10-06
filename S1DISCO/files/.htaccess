@@ -1,0 +1,47 @@
+# Pasta de arquivos do S1 Disco
+# NADA dentro desta pasta pode ser executado pelo servidor.
+# Os arquivos sao servidos apenas pelo sistema (app.php), que
+# sempre envia "Content-Disposition: attachment".
+
+# 1) Apache 2.4
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+# 2) Apache 2.2
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
+
+# 3) Desliga qualquer handler de PHP/Perl/CGI
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php5.c>
+    php_flag engine off
+</IfModule>
+<IfModule php_module>
+    php_flag engine off
+</IfModule>
+
+RemoveHandler .php .phar .phtml .php3 .php4 .php5 .php7 .php8 .pht .phps .cgi .pl .py .sh
+RemoveType .php .phar .phtml .php3 .php4 .php5 .php7 .php8 .pht .phps .cgi .pl .py .sh
+AddType text/plain .php .phar .phtml .php3 .php4 .php5 .php7 .php8 .pht .phps
+
+# 4) Bloqueia qualquer arquivo com extensao executavel
+<FilesMatch "(?i)\.(php[0-9]?|phtml|phar|phps|pht|cgi|pl|py|sh|bash|cgi|asp|aspx|jsp|shtml|htaccess|htpasswd|ini|log)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 5) Sem listagem de diretorio
+Options -Indexes

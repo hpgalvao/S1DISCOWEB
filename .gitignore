@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------
+# S1 Disco - .gitignore
+# Nada aqui e codigo: sao dados de quem usa o sistema e chaves.
+# ---------------------------------------------------------------
+
+# banco de dados SQLite (gerado na primeira execucao)
+.s1disco_*/
+*.db.sqlite
+
+# chave da instalacao - derivado do nome do banco
+S1DISCO/.chave
+
+# arquivos enviados pelos usuarios (dados pessoais)
+S1DISCO/files/*
+!S1DISCO/files/.htaccess
+!S1DISCO/files/general/
+S1DISCO/files/general/*
+!S1DISCO/files/general/.gitkeep
+!S1DISCO/files/general/teste.txt
+
+# backups locais que ficaram na pasta raiz
+backup_*/
+
+# editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# logs
+*.log
